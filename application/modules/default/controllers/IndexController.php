@@ -13,6 +13,25 @@ class Default_IndexController extends Zend_Controller_Action
         // action body
     }
 
+    public function headerAction()
+    {
+        $container = new Zend_Navigation(
+            array(
+                array(
+                    'action'     => 'index',
+                    'controller' => 'form',
+                    'module'     => 'default',
+                    'label'      => 'Home'
+                ),
+                array(
+                    'uri'        => 'https://github.com/adamkopec/form',
+                    'label'      => 'GitHub'
+                )
+            )
+        );
+
+        $this->view->navigation($container);
+    }
 
 }
 
