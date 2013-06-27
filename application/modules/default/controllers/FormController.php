@@ -8,11 +8,10 @@ class Default_FormController extends Zend_Controller_Action
         /* Initialize action controller here */
     }
 
-    public function indexAction()
-    {
-        // action body
+    public function clearAction() {
+        \App\BasketStorage::getInstance()->getBasket()->clear();
+        return $this->_helper->redirector('index','index');
     }
-
 
 }
 

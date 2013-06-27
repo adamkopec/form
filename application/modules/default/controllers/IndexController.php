@@ -10,7 +10,19 @@ class Default_IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        // action body
+        $builder = new \App\Business\AddToBasketBuilder();
+        $form = $builder->build();
+
+        if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
+            $adder = new \App\Basket\Adder($form->getValues());
+            try {
+                $adder->addToBasket();
+            } catch(Exception $e) {
+                $form->addError($e->getMessage());
+            }
+        }
+
+        $this->view->addToBasketForm = $form;
     }
 
     public function headerAction()
@@ -22,6 +34,12 @@ class Default_IndexController extends Zend_Controller_Action
                     'controller' => 'form',
                     'module'     => 'default',
                     'label'      => 'Home'
+                ),
+                array(
+                    'action'     => 'clear',
+                    'controller' => 'form',
+                    'module'     => 'default',
+                    'label'      => 'Clear basket'
                 ),
                 array(
                     'uri'        => 'https://github.com/adamkopec/form',
