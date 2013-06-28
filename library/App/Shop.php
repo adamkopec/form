@@ -16,7 +16,6 @@ class Shop {
 
     public static function getInstance ()
     {
-        //Wersja czytelniejsza
         if (self::$instance === null) {
             self::$instance = new self();
         }

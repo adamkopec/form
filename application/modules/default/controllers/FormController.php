@@ -55,7 +55,7 @@ class Default_FormController extends Zend_Controller_Action
     protected function _tryOnPost(Zend_Form $form, Closure $code) {
         if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
             try {
-                $code($form);
+                return $code($form);
             } catch(Exception $e) {
                 $this->msg->addMessage(array('error', "Błąd: " . $e->getMessage()));
             }
