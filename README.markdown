@@ -15,3 +15,9 @@ Walidacja biznesowa i strukturalna
 Multi-submit
 
 Działanie na sesji (no-db).
+
+Twitter Boostrap
+
+Namespace'y w autoloaderze
+
+Buildery i listenery
