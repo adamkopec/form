@@ -13,7 +13,7 @@ class Product extends \Zend_Form_SubForm {
 
     public function init() {
         $this->addElement('text','quantity',array(
-            'validators' => array(array('Digits'))
+            'validators' => array(array('Digits', true))
         ));
 
         $this->addElement('hidden', 'id');

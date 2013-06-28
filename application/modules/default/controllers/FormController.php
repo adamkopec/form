@@ -58,6 +58,7 @@ class Default_FormController extends Zend_Controller_Action
                 return $code($form);
             } catch(Exception $e) {
                 $this->msg->addMessage(array('error', "Błąd: " . $e->getMessage()));
+                $this->_helper->redirector('index','form','default');
             }
         }
     }

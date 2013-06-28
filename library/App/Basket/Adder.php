@@ -42,8 +42,7 @@ class Adder extends Observable {
         $product = Shop::getInstance()->getProduct($id);
 
         if ($basket->hasProduct($id)) {
-            $basketProduct = $basket->getProduct($id);
-            $basketProduct->setQuantity($basketProduct->getQuantity() + $quantity);
+            throw new \Exception("Produkt już istnieje w koszyku");
         } else {
             $basket->addProduct(new BasketProduct($product, $quantity));
         }
