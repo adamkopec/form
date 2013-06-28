@@ -3,13 +3,12 @@
  * Created by JetBrains PhpStorm.
  * User: adamkopec
  * Date: 27.06.2013
- * Time: 19:55
+ * Time: 23:47
  */
 
-namespace App\Form;
+namespace App\Form\UpdateBasket;
 
-
-class AddBasketProduct extends \Zend_Form_SubForm {
+class Product extends \Zend_Form_SubForm {
 
     public function init() {
         $this->addElement('text','quantity',array(
@@ -17,5 +16,9 @@ class AddBasketProduct extends \Zend_Form_SubForm {
         ));
 
         $this->addElement('hidden', 'id');
+        $this->addElement('submit', 'delete', array('label' => 'Usuń'));
+
+
+        parent::init();
     }
 }

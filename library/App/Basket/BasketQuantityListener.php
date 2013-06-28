@@ -11,10 +11,9 @@ namespace App\Basket;
 
 use App\BasketStorage;
 use App\Entity\Basket;
-use App\Form\AddBasketProduct;
 use App\Listener;
 
-class FormListener implements Listener {
+class BasketQuantityListener implements Listener {
 
     /**
      * @var Basket
@@ -25,10 +24,10 @@ class FormListener implements Listener {
         $this->basket = BasketStorage::getInstance()->getBasket();
     }
 
-    public function newProduct(AddBasketProduct $form) {
-        $id = $form->getElement('id')->getValue();
+    public function newProduct(\Zend_Form $productForm) {
+        $id = $productForm->getElement('id')->getValue();
         if ($this->basket->hasProduct($id)) {
-            $form->setDefault('quantity', $this->basket->getProduct($id)->getQuantity());
+            $productForm->setDefault('quantity', $this->basket->getProduct($id)->getQuantity());
         }
     }
 }

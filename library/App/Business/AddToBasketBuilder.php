@@ -8,13 +8,18 @@
 
 namespace App\Business;
 
+use App\Shop;
+use App\Form\Builder\AddToBasket;
+use App\Business\QuantityValidationListener;
 
 class AddToBasketBuilder {
+    /**
+     * @return \App\Form\AddToBasket\Container
+     */
     public function build() {
-        $shop = \App\Shop::getInstance();
-        $builder = new \App\Form\Builder\AddToBasket($shop->getProducts());
-        $builder->addListener(new \App\Business\AddToBasketListener());
-        $builder->addListener(new \App\Basket\FormListener());
+        $shop = Shop::getInstance();
+        $builder = new AddToBasket($shop->getProducts());
+        $builder->addListener(new QuantityValidationListener());
         return $builder->build();
     }
 }

@@ -2,27 +2,8 @@
 
 class Default_IndexController extends Zend_Controller_Action
 {
-
-    public function init()
-    {
-        /* Initialize action controller here */
-    }
-
-    public function indexAction()
-    {
-        $builder = new \App\Business\AddToBasketBuilder();
-        $form = $builder->build();
-
-        if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
-            $adder = new \App\Basket\Adder($form->getValues());
-            try {
-                $adder->addToBasket();
-            } catch(Exception $e) {
-                $form->addError($e->getMessage());
-            }
-        }
-
-        $this->view->addToBasketForm = $form;
+    public function indexAction() {
+        return $this->_helper->redirector('index','form');
     }
 
     public function headerAction()
@@ -33,13 +14,19 @@ class Default_IndexController extends Zend_Controller_Action
                     'action'     => 'index',
                     'controller' => 'form',
                     'module'     => 'default',
-                    'label'      => 'Home'
+                    'label'      => 'Add'
+                ),
+                array(
+                    'action'     => 'update',
+                    'controller' => 'form',
+                    'module'     => 'default',
+                    'label'      => 'Update'
                 ),
                 array(
                     'action'     => 'clear',
                     'controller' => 'form',
                     'module'     => 'default',
-                    'label'      => 'Clear basket'
+                    'label'      => 'Clear'
                 ),
                 array(
                     'uri'        => 'https://github.com/adamkopec/form',
@@ -49,6 +36,8 @@ class Default_IndexController extends Zend_Controller_Action
         );
 
         $this->view->navigation($container);
+        $msg = $this->_helper->flashMessenger;
+        $this->view->messages = $msg->getMessages();
     }
 
 }

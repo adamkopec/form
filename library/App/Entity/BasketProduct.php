@@ -41,7 +41,7 @@ class BasketProduct {
         return $this->quantity;
     }
 
-    public function setBonus(Product $bonus)
+    public function setBonus(Product $bonus = null)
     {
         $this->bonus = $bonus;
     }

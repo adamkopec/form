@@ -39,11 +39,18 @@ class Basket {
         $this->products = [];
     }
 
+    public function removeProduct($id) {
+        unset($this->products[$id]);
+    }
+
     public function getValue() {
         $sum = 0;
         foreach($this->products as $p) {
             $sum += $p->getValue();
         }
         return $sum;
+    }
+    public function isEmpty() {
+        return count($this->products) == 0;
     }
 }

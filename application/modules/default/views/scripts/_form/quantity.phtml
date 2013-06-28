@@ -1,0 +1,12 @@
+<?php if ($this->bonus): ?>
+<div>Dostaniesz gratis: <?= $this->bonus->getName(); ?></div>
+<?php endif; ?>
+<?= $this->formLabel($this->element->getName(),$this->element->getLabel()); ?>
+<?= $this->formText($this->element->getFullyQualifiedName(), $this->element->getValue(), $this->element->getAttribs()); ?>
+<?php if ($this->element->hasErrors()): ?>
+<?= $this->formErrors($this->element->getErrors()); ?>
+<?php endif; ?>
+<div style="text-align: right; width: 100%;">
+    Cena: <?=  $this->basketProduct->getProduct()->getPrice() ?><br />
+    Wartość:  <?= $this->basketProduct->getValue(); ?>
+</div>

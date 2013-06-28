@@ -12,16 +12,18 @@ namespace App\Entity;
 class Product {
     protected static $cnt = 665;
 
-    public function __construct($price = 0, $name = '') {
+    protected $id;
+    protected $price;
+    protected $name;
+    protected $promo = false;
+
+    public function __construct($price = 0, $name = '', $promo = false) {
         self::$cnt++;
         $this->id = self::$cnt;
         $this->price = $price;
         $this->name = $name;
+        $this->promo = $promo;
     }
-
-    protected $id;
-    protected $price;
-    protected $name;
 
     public function getId()
     {
@@ -38,19 +40,21 @@ class Product {
         return $this->price;
     }
 
-    /**
-     * @param string $name
-     */
     public function setName($name)
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return $this->name;
+    }
+
+    public function isInPromotion() {
+        return $this->promo;
+    }
+
+    public function setInPromotion($flag) {
+        $this->promo = (bool)$flag;
     }
 }

@@ -2,19 +2,16 @@
 /**
  * Created by JetBrains PhpStorm.
  * User: adamkopec
- * Date: 27.06.2013
- * Time: 20:30
+ * Date: 28.06.2013
+ * Time: 00:15
  */
 
 namespace App\Basket;
 
-
-use App\Entity\BasketProduct;
 use App\BasketStorage;
 use App\Observable;
-use App\Shop;
 
-class Adder extends Observable {
+class Updater extends Observable {
 
     protected $formValues;
 
@@ -22,30 +19,38 @@ class Adder extends Observable {
         $this->formValues = $values;
     }
 
-    public function addToBasket() {
+    public function updateBasket() {
         foreach($this->formValues as $elementValues) {
             $id = $elementValues['id'];
-            $quantity = $elementValues['quantity'];
+            $quantity = isset($elementValues['quantity']) ? $elementValues['quantity'] : 0;
+            $delete = isset($elementValues['delete']);
 
-            if (empty($id) || empty($quantity)) {
+            if (empty($id)) {
                 continue;
             }
 
-            $this->_add($id, $quantity);
+            if ($delete) {
+                $quantity = 0;
+            }
+
+            $this->_update($id, $quantity);
         }
         $this->notify('updated', $this->_getBasket());
     }
 
-    protected function _add($id, $quantity)
+    protected function _update($id, $quantity)
     {
         $basket = $this->_getBasket();
-        $product = Shop::getInstance()->getProduct($id);
 
         if ($basket->hasProduct($id)) {
             $basketProduct = $basket->getProduct($id);
-            $basketProduct->setQuantity($basketProduct->getQuantity() + $quantity);
+            if ($quantity > 0) {
+                $basketProduct->setQuantity($quantity);
+            } else {
+                $basket->removeProduct($id);
+            }
         } else {
-            $basket->addProduct(new BasketProduct($product, $quantity));
+            throw new \Exception(sprintf("Cannot update product %s, it is not present in the basket", $id));
         }
     }
 

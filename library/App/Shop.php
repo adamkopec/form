@@ -30,15 +30,15 @@ class Shop {
 
     private function __construct() {
         $products = [
-            [100, "Karburator"],
-            [200, "Wariator"],
-            [300, "Alternator"],
-            [400, "Radiator"]
+            [100, "Karburator",false],
+            [200, "Wariator",true],
+            [300, "Alternator",true],
+            [400, "Radiator",false]
         ];
 
         while(count($products)) {
-            list($price,$name) = array_shift($products);
-            $product = new Product($price,$name);
+            list($price,$name,$promo) = array_shift($products);
+            $product = new Product($price,$name,$promo);
             $this->products[$product->getId()] = $product;
         }
     }
